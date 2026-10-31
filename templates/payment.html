@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        background: radial-gradient(circle, #1a1a1a, #000000); /* Dark theme */
+        color: white;
+        font-family: 'Nunito Sans', sans-serif;
+    }
+    
+    .success-card {
+        background: rgba(255, 255, 255, 0.1); /* Transparent glass effect */
+        padding: 50px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0, 255, 0, 0.2);
+        backdrop-filter: blur(10px); /* Frosted glass effect */
+        animation: glow 1.5s infinite alternate;
+    }
+    
+    @keyframes glow {
+        from { box-shadow: 0 4px 20px rgba(0, 255, 0, 0.3); }
+        to { box-shadow: 0 8px 80px rgba(0, 255, 0, 0.6); }
+    }
+    
+    .icon-container {
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+    }
+    
+    .checkmark {
+        font-size: 60px;
+        color: #2ecc71;
+    }
+    
+    .success-title {
+        color: #2ecc71;
+        font-size: 36px;
+        margin-top: 20px;
+    }
+    
+    .success-message {
+        color: #ddd;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .custom-btn {
+        border: 2px solid #2ecc71;
+        color: #2ecc71;
+        transition: all 0.3s;
+    }
+    
+    .custom-btn:hover {
+        background: #2ecc71;
+        color: black;
+    }
+    
+</style>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card success-card text-center">
+        <div class="icon-container">
+            <i class="checkmark">✓</i>
+        </div>
+        <h1 class="success-title">Success!</h1>
+        <p class="success-message">We received your purchase request.<br>Thank You!</p>
+        <a href="{% url 'index' %}" class="btn btn-light custom-btn">Back To Home</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<script>
+    function launchConfetti() {
+        confetti({
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.6 }
+        });
+    }
+    window.onload = launchConfetti;
+    
+</script>
+{% endblock %}

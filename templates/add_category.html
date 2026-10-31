@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="transparent-card">
+        <h2 class="text-center">Add Category</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <label class="form-label">Category Name:</label>
+            <input type="text" name="name" class="form-control transparent-input" required>
+            <button type="submit" class="btn btn-primary mt-3">Add Category</button>
+        </form>
+
+        <h4 class="mt-4 text-center">Existing Categories</h4>
+        <ul class="list-group transparent-list">
+            {% for category in categories %}
+                <li class="list-group-item transparent-list-item">{{ category.name }}</li>
+            {% empty %}
+                <li class="list-group-item transparent-list-item">No categories added yet.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<style>
+    /* Transparent Card */
+    .transparent-card {
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        margin: 30px auto;
+        max-width: 600px;
+        backdrop-filter: blur(10px); /* Glass effect */
+    }
+
+    /* Transparent Input */
+    .transparent-input {
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        color: #fff;
+    }
+
+    .transparent-input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .transparent-input:focus {
+        border-color: #D10024;
+        box-shadow: 0px 0px 5px rgba(209, 0, 36, 0.5);
+    }
+
+    /* Transparent List */
+    .transparent-list .transparent-list-item {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background: #D10024;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+        background: #a6001a;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .transparent-card {
+            width: 90%;
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+
+    .containers {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 30px;
+        border-radius: 12px;
+        background: #FFF;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #000;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        color: #333;
+        display: block;
+        margin-bottom: 8px;
+    }
+    .glass-input {
+        background: white !important;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        color: black !important;
+    }
+
+    .glass-input::placeholder {
+        color: black !important;
+        opacity: 1; /* Ensures full black color */
+    }
+
+    .glass-input:-ms-input-placeholder {
+        color: black !important; /* For IE */
+    }
+
+    .glass-input::-ms-input-placeholder {
+        color: black !important; /* For Edge */
+    }
+
+    .glass-input:focus {
+        background: white !important;
+        color: black !important;
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        box-shadow: none;
+    }
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #fff;
+        color: #000;
+        transition: 0.3s ease-in-out;
+    }
+
+    input::placeholder, textarea::placeholder {
+        color: #666;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: #D10024;
+        box-shadow: 0 0 8px rgba(209, 0, 36, 0.3);
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        background: #D10024;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background: #a6001a;
+        transform: translateY(-2px);
+    }
+</style>
+
+<br><br><br><br><br>
+<div class="containers">
+    <h2>Submit a Complaint</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" name="subject" class="form-control glass-input" placeholder="Enter subject" required>
+        </div>
+        <div class="form-group">
+            <label for="complaint_text">Complaint</label>
+            <textarea name="complaint_text" class="form-control glass-input" rows="5" placeholder="Describe your issue..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit Complaint</button>
+    </form>
+</div>
+
+{% endblock %}

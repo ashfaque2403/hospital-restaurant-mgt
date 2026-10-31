@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<br><br><br><br><br>
+
+<section id="contact" class="contact">
+    <div class="container-fluid" data-aos="fade-up">
+        <div class="section-title text-center">
+            <h2 class="text-black">Add Delivery Boy</h2>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <form method="post" role="form" class="php-email-form">
+                    {% csrf_token %}
+                    {% include "messages.html" %}
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control custom-input" id="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" class="form-control custom-input" id="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" class="form-control custom-input" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="route_location">Floor</label>
+                        <input type="number" name="route_location" class="form-control custom-input" id="route_location" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control custom-input" name="password" id="password" required>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary custom-submit">Add Delivery Boy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact {
+        padding: 50px 0;
+    }
+
+    .php-email-form {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-input {
+        background: white !important;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        color: black !important;
+        padding: 12px;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .custom-input::placeholder {
+        color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    .custom-input:focus {
+        border-color: #D10024;
+        box-shadow: 0 0 10px rgba(209, 0, 36, 0.5);
+        outline: none;
+    }
+
+    label {
+        color: black;
+        font-weight: bold;
+    }
+
+    .custom-submit {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        background: #D10024;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .custom-submit:hover {
+        background: #a6001a;
+        transform: translateY(-2px);
+    }
+</style>
+
+{% endblock %}

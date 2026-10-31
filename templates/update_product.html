@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <h2>Update Product</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ product.name }}" class="form-control" required>
+
+        <label>Description:</label>
+        <textarea name="description" class="form-control" required>{{ product.description }}</textarea>
+
+        <label>Price:</label>
+        <input type="number" name="price" value="{{ product.price }}" class="form-control" required>
+
+        <label>Discount:</label>
+        <input type="number" name="discount" value="{{ product.discount }}" class="form-control">
+
+        <label>Stock Quantity:</label>
+        <input type="number" name="stock_quantity" value="{{ product.stock_quantity }}" class="form-control" required>
+
+        <label>Category:</label>
+        <select name="category" class="form-control">
+            <option class="text-dark" value="">Select Category</option>
+            {% for category in categories %}
+                <option class="text-dark" value="{{ category.id }}" {% if product.category.id == category.id %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+
+        <label>Upload New Images:</label>
+        <input type="file" name="images" multiple class="form-control">
+
+        <button type="submit" class="btn btn-primary mt-3">Update Product</button>
+    </form>
+</div>
+{% endblock %}

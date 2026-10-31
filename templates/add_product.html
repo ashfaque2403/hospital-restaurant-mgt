@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<br><br><br><br>
+<div class="container mt-5">
+    {% include "messages.html" %}
+    <div class="card p-4 custom-card">
+        <h2 class="text-center mb-4 text-black">Add New Product</h2>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <h4 class="text-black">Product Details</h4>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" name="name" class="form-control custom-input" required>
+            </div>
+        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <textarea name="description" class="form-control custom-input" required></textarea>
+            </div>
+        
+            <div class="mb-3">
+                <label for="price" class="form-label">Price:</label>
+                <input type="number" name="price" class="form-control custom-input" step="0.01" required>
+            </div>
+        
+            <div class="mb-3">
+                <label for="category" class="form-label">Category:</label>
+                <select name="category" class="form-control custom-input">
+                    <option value="">Select Category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div class="mb-3">
+                <label for="discount" class="form-label">Discount:</label>
+                <input type="number" name="discount" class="form-control custom-input" min="0">
+            </div>
+        
+            <div class="mb-3">
+                <label for="stock_quantity" class="form-label">Stock Quantity:</label>
+                <input type="number" name="stock_quantity" class="form-control custom-input" min="0" required>
+            </div>
+        
+            <h4 class="text-black">Product Attributes</h4>
+            <div class="form-check">
+                <input type="checkbox" name="sugarless" class="form-check-input" id="sugarless">
+                <label for="sugarless" class="form-check-label">Sugarless</label>
+            </div>
+        
+            <div class="form-check">
+                <input type="checkbox" name="saltless" class="form-check-input" id="saltless">
+                <label for="saltless" class="form-check-label">Saltless</label>
+            </div>
+        
+            <div class="form-check">
+                <input type="checkbox" name="spiceless" class="form-check-input" id="spiceless">
+                <label for="spiceless" class="form-check-label">Spiceless</label>
+            </div>
+        
+            <h4 class="text-black">Upload Product Images</h4>
+            <div class="mb-3">
+                <input type="file" name="images" class="form-control custom-input" multiple required>
+            </div>
+        
+            <button type="submit" class="btn btn-primary custom-submit">Add Product</button>
+        </form>
+        
+    </div>
+</div>
+
+<style>
+    h4,h2{
+        color:#000
+    }
+    .custom-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-input {
+        background: white !important;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        color: black !important;
+        padding: 12px;
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .custom-input::placeholder {
+        color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    .custom-input:focus {
+        border-color: #D10024;
+        box-shadow: 0 0 10px rgba(209, 0, 36, 0.5);
+        outline: none;
+    }
+
+    label {
+        color: black;
+        font-weight: bold;
+    }
+
+    .custom-submit {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        background: #D10024;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .custom-submit:hover {
+        background: #a6001a;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}

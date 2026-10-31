@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image: url(images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text justify-content-center align-items-center">
+                <div class="col-md-7 col-sm-12 text-center ftco-animate">
+                    <h1 class="mb-3 mt-5 bread">Checkout</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Checkout</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <form method="post" action="{% url 'start_order' %}">
+                {% csrf_token %}
+                {% include "messages.html" %}
+                <div class="row">
+                    <div class="col-xl-8 ftco-animate ftco-bg-dark p-5 text-white">
+                        <h3 class="mb-4 billing-heading">
+                            Billing Details - <a href="{% url 'address' %}" class="primary-btn order-submit">Add/Change Address</a>
+                        </h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="first_name">First Name</label>
+                                    <input required value="{{ form_data.first_name }}" name="first_name" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="last_name">Last Name</label>
+                                    <input required value="{{ form_data.last_name }}" name="last_name" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ftco-bg-dark">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="room_no">Room Number</label>
+                                    <input required value="{{ form_data.room_no }}" name="room_no" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="floor_no">Floor Number</label>
+                                    <input required value="{{ form_data.floor_no }}" name="floor_no" type="number" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input required value="{{ form_data.phone }}" name="phone" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input required value="{{ form_data.email }}" name="email" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cart Summary & Payment -->
+                    <div class="col-xl-4 d-flex flex-column text-white">
+                        <div class="cart-detail cart-total ftco-bg-dark p-3 p-md-4 " >
+                            <h3 class="billing-heading mb-4">Cart Total</h3>
+                            <p class="d-flex">
+                                <span>Subtotal</span>
+                                <span>${{ total_amount }}</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Discount</span>
+                                <span>${{ total_discount }}</span>
+                            </p>
+                            <hr>
+                            <p class="d-flex total-price">
+                                <span>Total</span>
+                                <span>${{ discounted_amount }}</span>
+                            </p>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="cart-detail ftco-bg-dark p-3 p-md-4 mt-3">
+                            <h3 class="billing-heading mb-4">Payment Method</h3>
+
+                            <!-- Debit Card Payment -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="payment_method" class="mr-2" id="debitCardRadio" onclick="togglePaymentFields()"> 
+                                            Debit Card Transfer
+                                        </label>
+                                        <div id="cardDetails" style="display: none;">
+                                            <input name="card_name" class="form-control mt-2" type="text" placeholder="Name on card">
+                                            <input name="card_number" class="form-control mt-2" type="text" placeholder="Credit card number">
+                                            <input name="expiration" class="form-control mt-2" type="text" placeholder="Expiration (MM/YY)">
+                                            <input name="cvv" class="form-control mt-2" type="text" placeholder="CVV">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- UPI Payment -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="payment_method" class="mr-2" id="upiRadio" onclick="togglePaymentFields()"> 
+                                            UPI Payment
+                                        </label>
+                                        <div id="upiDetails" style="display: none; margin-top: 10px;">
+                                            <p><strong>UPI ID:</strong> demo@upi</p>
+                                            <p><strong>QR Code:</strong> <img src="{% static 'images/upi_qr.png' %}" width="90px" height="90px" alt="UPI QR Code"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Terms & Conditions -->
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" required class="mr-2"> I accept the terms and conditions
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Place Order Button -->
+                            <p><button type="submit" class="btn btn-primary py-3 px-4">Place an order (${{ discounted_amount }})</button></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript -->
+<script>
+    function togglePaymentFields() {
+        var cardDetails = document.getElementById("cardDetails");
+        var upiDetails = document.getElementById("upiDetails");
+        var debitCardRadio = document.getElementById("debitCardRadio");
+        var upiRadio = document.getElementById("upiRadio");
+
+        cardDetails.style.display = debitCardRadio.checked ? "block" : "none";
+        upiDetails.style.display = upiRadio.checked ? "block" : "none";
+    }
+</script>
+{% endblock content %}

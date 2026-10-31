@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<br><br><br><br>
+<div class="container">
+    <div class="edit-card">
+        <h2 class="edit-header">Edit Profile</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" name="name" class="form-control glass-input" value="{{ profile.name }}" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone_number" class="form-label">Phone Number</label>
+                <input type="text" name="phone_number" class="form-control glass-input" value="{{ profile.phone_number }}" placeholder="Enter your phone number" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea name="address" class="form-control glass-input" rows="3" placeholder="Enter your address" required>{{ profile.address }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="location" class="form-control glass-input" value="{{ profile.location }}" placeholder="Enter your location" required>
+            </div>
+            <button type="submit" class="btn btn-warning custom-btn">Update Profile</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background: #121212;
+    }
+
+    .edit-card {
+        padding: 30px;
+        border-radius: 12px;
+        background: white;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        margin: 30px auto;
+        max-width: 700px;
+        color: black;
+    }
+
+    .edit-header {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        color: black;
+    }
+
+    .glass-input {
+        background: white !important;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        color: black !important;
+    }
+
+    .glass-input::placeholder {
+        color: black !important;
+        opacity: 1; /* Ensures full black color */
+    }
+
+    .glass-input:-ms-input-placeholder {
+        color: black !important; /* For IE */
+    }
+
+    .glass-input::-ms-input-placeholder {
+        color: black !important; /* For Edge */
+    }
+
+    .glass-input:focus {
+        background: white !important;
+        color: black !important;
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        box-shadow: none;
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    .custom-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 8px;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .custom-btn:hover {
+        background: linear-gradient(90deg, #4ca1af, #2c3e50);
+        color: #fff;
+    }
+
+    @media (max-width: 768px) {
+        .edit-card {
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %}

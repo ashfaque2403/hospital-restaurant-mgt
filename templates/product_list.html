@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container mt-5">
+    
+    <a href="{% url 'add_product' %}" class="btn btn-primary mb-3">Add Product</a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                {% if not request.user.is_deliveryboy %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>
+                   
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" width="50">
+               
+                       
+                </td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>${{ product.price }}</td>
+                <td>{{ product.stock_quantity }}</td>
+                {% if not request.user.is_deliveryboy %}
+                <td>
+                    <a href="{% url 'update-product' product.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="{% url 'delete-product' product.id %}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No products available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<style>
+    /* General Styling */
+    .container {
+        max-width: 1200px;
+        margin-top: 30px;
+    }
+
+    h2 {
+        font-family: 'Arial', sans-serif;
+        color: #444;
+        font-weight: bold;
+    }
+
+    /* Table Styling */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .thead-dark {
+        background-color: #D10024;
+        color: white;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+        background-color: #D10024;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #a6001a;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .btn-warning:hover {
+        background-color: #e67e22;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+    }
+
+    /* Image Styling */
+    img {
+        border-radius: 5px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .table th, .table td {
+            font-size: 12px;
+        }
+
+        .btn-primary, .btn-warning, .btn-danger {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    }
+</style>
+{% endblock %}
+
+

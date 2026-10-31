@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<section class="home-slider owl-carousel">
+    <div class="slider-item" style="background-image: url('{% static 'images/dejjssert-4.jpg' %}');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text justify-content-center align-items-center">
+                <div class="col-md-7 col-sm-12 text-center ftco-animate">
+                    <h1 class="mb-3 mt-5 bread">Our Menu</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Menu</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .ftco-animate:hover .plus-icon {
+        opacity: 1 !important;
+    }
+</style>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="col-md-12 nav-link-wrap mb-5">
+            <div class="nav ftco-animate nav-pills justify-content-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="m-1 nav-link btn btn-primary btn-outline-primary {% if filter_option == 'all' %}active{% endif %}" href="?filter=all">All</a>
+                <a class="m-1 nav-link btn btn-primary btn-outline-primary {% if filter_option == 'sugarless' %}active{% endif %}" href="?filter=sugarless">Sugarless</a>
+                <a class="m-1 nav-link btn btn-primary btn-outline-primary {% if filter_option == 'saltless' %}active{% endif %}" href="?filter=saltless">Saltless</a>
+                <a class="m-1 nav-link btn btn-primary btn-outline-primary {% if filter_option == 'spiceless' %}active{% endif %}" href="?filter=spiceless">Spiceless</a>
+            </div>
+            
+        </div>
+        
+        <div class="row">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }} <a href="{% url "cart" %}"><strong>View</strong></a></div>
+                {% endfor %}
+            {% endif %}
+            
+            {% for category, products in categorized_products.items %}
+                <div class="col-md-12 mb-5 pb-3">
+                    <h3 class="mb-5 heading-pricing ftco-animate">{{ category }}</h3>
+                    {% for item in products %}
+                        <div class="pricing-entry d-flex ftco-animate">
+                            <div class="img d-flex align-items-center justify-content-center position-relative" 
+                                 style="background-image: url('{{ item.image.url }}'); background-size: cover; background-position: center;">
+                                 {% if not request.user.is_superuser %}
+                                <a href="{% url 'add' item.id %}" 
+                                   class="position-absolute text-white text-decoration-none plus-icon" 
+                                   style="font-size: 40px; padding: 10px 20px; border-radius: 50%; opacity: 0; transition: opacity 0.3s ease-in-out;">
+                                    +
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="desc pl-3">
+                                <div class="d-flex text align-items-center">
+                                    <h3><span>{{ item.name }}</span></h3>
+                                    <span class="price">${{ item.price }}</span>
+                                </div>
+                                <div class="d-block">
+                                    <p>{{ item.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No products available in this category.</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

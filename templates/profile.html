@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    h2,h4{
+        color:#000;
+    }
+
+    .profile-container {
+        padding: 30px;
+        border-radius: 12px;
+    }
+
+    .profile-header {
+        color: #fff;
+        background: linear-gradient(90deg, #2c3e50, #4ca1af);
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .card-custom {
+        border-radius: 12px;
+        padding: 25px;
+        background: rgba(255, 255, 255, 1);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        color: black;
+    }
+
+    .sidebar-menu {
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        backdrop-filter: blur(8px);
+    }
+
+    .sidebar-menu a {
+        display: block;
+        padding: 12px 18px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+    .sidebar-menu a:hover {
+        background: linear-gradient(90deg, #4ca1af, #2c3e50);
+        color: #fff;
+    }
+
+    input.form-control[readonly] {
+        background: rgb(0, 0, 0);
+        color: black;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    input::placeholder {
+        color: black !important;
+    }
+
+    label {
+        font-weight: 600;
+    }
+
+    .btn-warning {
+        font-weight: 600;
+    }
+</style>
+
+
+<br><br><br><br><br>
+<div class="container profile-container ">
+    <div class="profile-header">
+        <h1 class="fw-bold">Smart <span>Eat</span></h1>
+    </div>
+
+    <div class="row mt-4 ">
+        <!-- Sidebar -->
+        <div class="col-md-3 mb-4">
+            <div class="sidebar-menu">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'add_product' %}">Add Product</a>
+                    <a href="{% url 'add_deliveryboy' %}">Add DeliveryBoy</a>
+                    <a href="{% url 'view_complaints' %}">View Complaint and Respond</a>
+                    <a href="{% url 'add_category' %}">Add Categories</a>
+                    <a href="{% url 'product-list' %}">Products</a>
+                    <a href="{% url 'order' %}">My Orders</a>
+                {% elif request.user.is_manager %}
+                    <a href="{% url 'product-list' %}">Products</a>
+                {% elif request.user.is_deliveryboy %}
+                    <a href="{% url 'view_assigned_orders' %}">Orders</a>
+                {% else %}
+                    <a href="{% url 'add_complaint' %}">Add Complaint</a>
+                    <a href="{% url 'user_complaints' %}">My Complaints</a>
+                    <a href="{% url 'order' %}">My Orders</a>
+                    <a href="{% url 'address' %}">My Address</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="col-md-9">
+            <div class="card-custom">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>
+                        {% if not request.user.is_superuser %}
+                        <span class="text-warning">
+                            {% if request.user.status == "Doctor" %}
+                                Doctor
+                            {% elif request.user.status == "Patient" %}
+                                Patient
+                            {% elif request.user.status == "DeliveryBoy" %}
+                                DeliveryBoy
+                            {% elif request.user.status == "Chancellor" %}
+                                Chancellor
+                            {% else %}
+                                Unknown User
+                            {% endif %}
+                        </span>
+                        {% endif %}
+                        Personal Information
+                    </h4>
+                    <a href="{% url 'edit_profile' %}" class="btn btn-warning">Edit Profile</a>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.2);">
+
+                <div class="billing-details">
+                    <div class="form-group mb-3">
+                        <label>Name</label>
+                        <input readonly placeholder="{{ profile.name }}" class="form-control" type="text">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Phone Number</label>
+                        <input readonly placeholder="{{ profile.phone_number }}" class="form-control" type="text">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Email</label>
+                        <input readonly placeholder="{{ request.user.email }}" class="form-control" type="text">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Address</label>
+                        <input readonly placeholder="{{ profile.address }}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

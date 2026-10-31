@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<br><br><br><br><br>
+
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="billing-box glass-card">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% include "mess.html" %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name">First Name *</label>
+                                <input value="{{ form_data.first_name }}" name="first_name" type="text" class="form-control glass-input" id="first_name" placeholder="First Name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last_name">Last Name *</label>
+                                <input value="{{ form_data.last_name }}" name="last_name" type="text" class="form-control glass-input" id="last_name" placeholder="Last Name" required>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="email">Email Address *</label>
+                                <input value="{{ form_data.email }}" type="email" class="form-control glass-input" name="email" id="email" placeholder="Email" required>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="address">Address *</label>
+                                <input value="{{ form_data.address }}" type="text" class="form-control glass-input" name="address" id="address" placeholder="Address" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="zip">Zip Code *</label>
+                                <input value="{{ form_data.zipcode }}" type="text" class="form-control glass-input" name="zipcode" id="zip" placeholder="Zip Code" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="location">Location *</label>
+                                <input value="{{ form_data.location }}" type="text" class="form-control glass-input" name="location" id="location" placeholder="Location" required>
+                            </div>
+                            <div class="col-md-12 text-right mt-4">
+                                <button type="submit" class="btn update-btn">Update Address</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<br><br><br>
+
+<style>
+body {
+    background: #121212;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    border-radius: 12px;
+    color: #fff;
+}
+
+label {
+    color: black;
+    font-weight: 600;
+}
+
+.glass-input {
+    background: white !important;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    color: black !important;
+}
+
+.glass-input::placeholder {
+    color: black !important;
+    opacity: 1; /* Ensures full black color */
+}
+
+.glass-input:-ms-input-placeholder {
+    color: black !important; /* For IE */
+}
+
+.glass-input::-ms-input-placeholder {
+    color: black !important; /* For Edge */
+}
+
+.glass-input:focus {
+    background: white !important;
+    color: black !important;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+    box-shadow: none;
+}
+
+/* Button */
+.update-btn {
+    font-size: 18px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #f39c12;
+    color: #fff;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.update-btn:hover {
+    background: linear-gradient(90deg, #4ca1af, #2c3e50);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .glass-card {
+        padding: 20px;
+    }
+}
+</style>
+{% endblock content %}
